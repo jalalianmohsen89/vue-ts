@@ -1,9 +1,15 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { useStore } from "vuex";
+import { computed } from "vue";
 
 defineProps<{ msg: string }>();
 
-const count = ref(0);
+const store = useStore();
+const count = computed(() => store.state.CounterModule.count);
+
+function setDispatch() {
+  store.dispatch("incrementCounter");
+}
 </script>
 
 <template>
@@ -12,7 +18,7 @@ const count = ref(0);
   </h1>
 
   <div class="flex items-center justify-center">
-    <button type="button" @click="count++">count is {{ count }}</button>
+    <button type="button" @click="setDispatch">count is {{ count }}</button>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR
